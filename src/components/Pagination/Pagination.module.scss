@@ -1,0 +1,39 @@
+@import '../../scss/variables';
+
+.root {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    gap: 30px 10px;
+    padding: 15px 0;
+    @media (max-width:540px) {
+        padding-bottom: 60px;
+    }
+    @media (max-width:400px) {
+        flex-wrap: wrap;
+    }
+    
+
+    li a{
+        padding: 10px 17px;
+        border-radius: 50%;
+        border: 2px solid $orange;
+        text-align: center;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease-in;
+        &:hover {
+            background-color: $orange;
+           
+        }
+    }
+    :global {
+        .selected {
+            a {  
+            background-color: $orange;
+            color: #fff;}
+        }
+    }
+
+}

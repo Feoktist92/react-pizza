@@ -1,23 +1,29 @@
-import qs from 'qs';
-import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
-import { React, useEffect, useRef } from 'react';
+
+
+import  React , {useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { selectFilters, setFilters } from '../redux/slices/filtersSlice';
+import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
+import { useAppDispatch } from '../redux/store';
+import qs from 'qs';
 
-import Categories from '../components/Categories';
-import Sort, { list } from '../components/Sort';
-import Pizzablock from '../components/Pizzablock';
-import Skeleton from '../components/Skeleton';
-import Pagination from '../components/Pagination';
-import LoadingError from '../components/LoadingError';
 
-const Home = () => {
+import {Categories,Sort,Pizzablock,Skeleton,Pagination,LoadingError} from '../components'
+import { list } from '../components';
+// import Categories from '../components/Categories';
+// import Sort, { list } from '../components/Sort';
+// import Pizzablock from '../components/Pizzablock';
+// import Skeleton from '../components/Skeleton';
+// import Pagination from '../components/Pagination';
+// import LoadingError from '../components/LoadingError';
+
+
+const Home: React.FC = () => {
     const { categoryId, sort, sortMethod, searchValue, currentPage } =
         useSelector(selectFilters);
     const { items, status } = useSelector(selectPizzas);
-
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const isMounted = useRef(false);
 
@@ -34,7 +40,7 @@ const Home = () => {
         window.scrollTo(0, 0);
     };
 
-    //проверка первый ли рендер был и есть ли url-параметры, если первый - url-параметры не парсим, если рендер не первый - парсим url параметры
+    // проверка первый ли рендер был и есть ли url-параметры, если первый - url-параметры не парсим, если рендер не первый - парсим url параметры
     useEffect(() => {
         if (isMounted.current) {
             const queryString = qs.stringify({
@@ -42,29 +48,33 @@ const Home = () => {
                 categoryId,
                 currentPage,
                 sortMethod,
+                searchValue
             });
             navigate(`?${queryString}`);
         }
         isMounted.current = true;
-        //eslint-disable-next-line
+    // eslint-disable-next-line
     }, [categoryId, sort.sortProperty, currentPage, sortMethod]);
 
     // Если первый рендер уже был, то проверяем URl-параметры и сохраняем в редаксе
     useEffect(() => {
         if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1));
+            const params:any = qs.parse(window.location.search.substring(1));
             const sort = list.find(
                 (obj) => obj.sortProperty === params.sortProperty
             );
+            
             dispatch(setFilters({ ...params, sort }));
+        
         }
+    // eslint-disable-next-line
     }, []);
 
     // Если был первый рендер, запрашиваем пиццы, проверяя взяли  или  не взяли url-параметры
     useEffect(() => {
         getPizzas();
-        //eslint-disable-next-line
-    }, [categoryId, sort.sortProperty, sortMethod, currentPage, searchValue]);
+    // eslint-disable-next-line
+    }, [categoryId, sortMethod, currentPage, sort.sortProperty, searchValue]);
 
     return (
         <div className='container'>
@@ -76,12 +86,14 @@ const Home = () => {
             {status === 'error' ? (
                 <LoadingError />
             ) : (
+                <>
                 <div className='content__items'>
                     {status === 'loading'
                         ? [...new Array(4)].map((_, index) => (
                               <Skeleton key={index} />
                           ))
-                        : items.map((obj) => (
+                        : 
+                        items.map((obj: any) => (
                               <Pizzablock
                                   id={obj.id}
                                   title={obj.title}
@@ -92,7 +104,11 @@ const Home = () => {
                                   key={obj.id}
                               />
                           ))}
-                </div>
+                          </div>
+                          {items.length === 0 && (
+                            <LoadingError />
+                          )}
+                </>
             )}
 
             <Pagination />

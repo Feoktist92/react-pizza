@@ -2,7 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { plusItem, minusItem, removeProduct } from '../redux/slices/cartSlice';
 
-const CartItem = ({ id, title, price, count, imageUrl, type, size }) => {
+type CartItemProps = {id: string, title: string, price: number, count: number, imageUrl: string, type: string, size: number}
+
+export const CartItem:React.FC<CartItemProps> = ({ id, title, price, count, imageUrl, type, size }) => {
     const dispatch = useDispatch();
     const product = {
         id,
@@ -11,6 +13,7 @@ const CartItem = ({ id, title, price, count, imageUrl, type, size }) => {
         imageUrl,
         type,
         size,
+        count
     };
     const onClickPlus = () => {
         dispatch(plusItem(product));
@@ -41,7 +44,7 @@ const CartItem = ({ id, title, price, count, imageUrl, type, size }) => {
                 </p>
             </div>
             <div className='cart__item-count'>
-                <div
+                <button
                     className='button button--outline button--circle cart__item-count-minus'
                     onClick={onCickMinus}
                 >
@@ -61,9 +64,9 @@ const CartItem = ({ id, title, price, count, imageUrl, type, size }) => {
                             fill='#EB5A1E'
                         />
                     </svg>
-                </div>
+                </button>
                 <b>{count}</b>
-                <div
+                <button
                     className='button button--outline button--circle cart__item-count-plus'
                     onClick={onClickPlus}
                 >
@@ -83,13 +86,13 @@ const CartItem = ({ id, title, price, count, imageUrl, type, size }) => {
                             fill='#EB5A1E'
                         />
                     </svg>
-                </div>
+                </button>
             </div>
             <div className='cart__item-price'>
                 <b>{price * count} ₽</b>
             </div>
-            <div className='cart__item-remove' onClick={onClickRemove}>
-                <div className='button button--outline button--circle'>
+            <div className='cart__item-remove' >
+                <button className='button button--outline button--circle' onClick={onClickRemove}>
                     <svg
                         width='10'
                         height='10'
@@ -106,10 +109,10 @@ const CartItem = ({ id, title, price, count, imageUrl, type, size }) => {
                             fill='#EB5A1E'
                         />
                     </svg>
-                </div>
+                </button>
             </div>
         </div>
     );
 };
 
-export default CartItem;
+

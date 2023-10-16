@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 
 const typeName = ['тонкое', 'традиционное'];
 const sizeName = [26, 30, 40];
+type PizzablockProps = {title:string, imageUrl:string, price: number, sizes: number[], types: number[], id:string }
 
-const Pizzablock = ({ title, imageUrl, price, sizes, types, id }) => {
+
+export const Pizzablock:React.FC<PizzablockProps> = ({ title, imageUrl, price, sizes, types, id }) => {
     const { products } = useSelector(selectCart);
     const dispatch = useDispatch();
     const [activeType, setActiveType] = useState(0);
@@ -19,10 +21,12 @@ const Pizzablock = ({ title, imageUrl, price, sizes, types, id }) => {
         imageUrl,
         type: typeName[activeType],
         size: sizeName[activeSize],
+        count: 0
     };
 
     const cartProduct = products.find(
-        (obj) =>
+        (obj: {id: string, type: string,
+            size: number}) =>
             obj.id === product.id &&
             obj.type === product.type &&
             obj.size === product.size
@@ -64,7 +68,7 @@ const Pizzablock = ({ title, imageUrl, price, sizes, types, id }) => {
                             onClick={() => setActiveSize(index)}
                             className={activeSize === index ? 'active' : ''}
                         >
-                            {size} см.
+                            {sizeName[index]} см.
                         </li>
                     ))}
                 </ul>
@@ -95,4 +99,4 @@ const Pizzablock = ({ title, imageUrl, price, sizes, types, id }) => {
     );
 };
 
-export default Pizzablock;
+

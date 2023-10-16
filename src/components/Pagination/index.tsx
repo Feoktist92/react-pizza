@@ -4,12 +4,12 @@ import styles from './Pagination.module.scss';
 import { selectFilters, setCurrentPage } from '../../redux/slices/filtersSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Pagination = () => {
+export const Pagination:React.FC = () => {
     const { currentPage } = useSelector(selectFilters);
     const dispatch = useDispatch();
 
-    const onChangePage = (number) => {
-        dispatch(setCurrentPage(number));
+    const onChangePage = (page: number) => {
+        dispatch(setCurrentPage(page));
     };
 
     return (
@@ -27,4 +27,4 @@ const Pagination = () => {
     );
 };
 
-export default Pagination;
+

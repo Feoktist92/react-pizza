@@ -2,20 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import Loader from '../components/Loader';
+import {Loader} from '../components/Loader';
 import { addProduct, selectCart } from '../redux/slices/cartSlice';
 import { setSearchValue } from '../redux/slices/filtersSlice';
 
 const typeName = ['тонкое', 'традиционное'];
 const sizeName = [26, 30, 40];
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { products } = useSelector(selectCart);
 
-    const [pizza, setPizza] = useState();
+    const [pizza, setPizza] = useState<{
+        id: string,
+        title: string,
+        imageUrl: string,
+        price: number
+        types: [],
+        sizes: [],
+        desc: string,
+        type: string,
+        size: number,
+        count: number
+    } >();
     const [activeType, setActiveType] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
 
@@ -34,17 +45,18 @@ const FullPizza = () => {
         fetchPizza();
         //eslint-disable-next-line
     }, []);
-
+  
     if (!pizza) {
         return <Loader />;
     }
-
+    
     pizza.type = typeName[activeType];
     pizza.size = sizeName[activeSize];
 
     const cartProduct = products.find(
-        (obj) =>
-            obj.id === id && obj.type === pizza.type && obj.size === pizza.size
+        (obj: {id: string, type: string,
+            size: number}) =>
+            obj.id === pizza.id && obj.type === pizza.type && obj.size === pizza.size
     );
     const addedCount = cartProduct ? cartProduct.count : 0;
 

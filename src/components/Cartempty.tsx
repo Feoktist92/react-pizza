@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import cartEmptyPic from '../assets/img/empty-cart.png';
 
-const Cartempty = () => {
+export const Cartempty: React.FC = () => {
     return (
-        <>
             <div className='container container--cart'>
                 <div className='cart cart--empty'>
                     <h2>
@@ -22,8 +21,7 @@ const Cartempty = () => {
                     </Link>
                 </div>
             </div>
-        </>
     );
 };
 
-export default Cartempty;
+

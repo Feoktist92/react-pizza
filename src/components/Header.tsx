@@ -1,21 +1,33 @@
+import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Search from './Search';
-import logoSVG from '../assets/img/pizza-logo.svg';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { selectCart } from '../redux/slices/cartSlice';
 import { setSearchValue } from '../redux/slices/filtersSlice';
+import { calcTotalPrice } from '../utils/calcTotalPrice';
+import {Search} from './Search';
+import logoSVG from '../assets/img/pizza-logo.svg';
 
-const Header = () => {
+export const Header = () => {
     const dispatch = useDispatch();
-    const { products, totalPrice } = useSelector(selectCart);
-    const totalCount = products.reduce(
-        (sum, product) => product.count + sum,
-        0
-    );
     const { pathname } = useLocation();
+    const isMounted = useRef(false);
+    const { products, totalPrice } = useSelector(selectCart);
+
+
     const onClickClear = () => {
         dispatch(setSearchValue(''));
     };
+
+    useEffect (() => {
+        if(isMounted.current) {
+            const json = JSON.stringify(products);
+            localStorage.setItem('cart', json);
+        }
+        isMounted.current = true;
+    }, [products]);
+
+
     return (
         <div className='header'>
             <div className='container'>
@@ -60,11 +72,11 @@ const Header = () => {
                                 strokeLinejoin='round'
                             />
                         </svg>
-                        <span>{totalCount}</span>
+                        <span>{calcTotalPrice(products)}</span>
                     </Link>
                 </div>
             </div>
         </div>
     );
 };
-export default Header;
+

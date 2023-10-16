@@ -1,7 +1,7 @@
 import { ThreeCircles } from 'react-loader-spinner';
-import React from 'react';
 
-function Loader() {
+
+export const Loader: React.FC = () =>{
     return (
         <div className='container'>
             <div
@@ -26,4 +26,4 @@ function Loader() {
     );
 }
 
-export default Loader;
+

@@ -5,12 +5,15 @@ import { clearProducts, selectCart } from '../redux/slices/cartSlice';
 import {CartItem} from '../components/CardItem';
 import {Cartempty} from '../components/Cartempty';
 import { setSearchValue } from '../redux/slices/filtersSlice';
-import { calcTotalPrice } from '../utils/calcTotalPrice';
 
 const Cart: React.FC = () => {
     const dispatch = useDispatch();
     const { products, totalPrice } = useSelector(selectCart);
 
+    const totalCount = products.reduce(
+        (sum, product) => product.count + sum,
+        0
+    );
     const onClickClear = () => {
         if (window.confirm('Очистить корзину?')) dispatch(clearProducts());
     };
@@ -111,7 +114,7 @@ const Cart: React.FC = () => {
                 <div className='cart__bottom'>
                     <div className='cart__bottom-details'>
                         <span>
-                            Всего пицц: <b>{calcTotalPrice(products)} шт.</b>
+                            Всего пицц: <b>{ totalCount} шт.</b>
                         </span>
                         <span>
                             Сумма заказа: <b>{totalPrice} ₽</b>

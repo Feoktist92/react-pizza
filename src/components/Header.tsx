@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { selectCart } from '../redux/slices/cartSlice';
 import { setSearchValue } from '../redux/slices/filtersSlice';
-import { calcTotalPrice } from '../utils/calcTotalPrice';
 import {Search} from './Search';
 import logoSVG from '../assets/img/pizza-logo.svg';
 
@@ -14,7 +13,10 @@ export const Header = () => {
     const isMounted = useRef(false);
     const { products, totalPrice } = useSelector(selectCart);
 
-
+    const totalCount = products.reduce(
+        (sum, product) => product.count + sum,
+        0
+    );
     const onClickClear = () => {
         dispatch(setSearchValue(''));
     };
@@ -72,7 +74,7 @@ export const Header = () => {
                                 strokeLinejoin='round'
                             />
                         </svg>
-                        <span>{calcTotalPrice(products)}</span>
+                        <span>{totalCount}</span>
                     </Link>
                 </div>
             </div>

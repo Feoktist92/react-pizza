@@ -7,15 +7,14 @@
     align-content: center;
     gap: 30px 10px;
     padding: 15px 0;
-    @media (max-width:540px) {
+    @media (max-width: 540px) {
         padding-bottom: 60px;
     }
-    @media (max-width:400px) {
+    @media (max-width: 400px) {
         flex-wrap: wrap;
     }
-    
 
-    li a{
+    li a {
         padding: 10px 17px;
         border-radius: 50%;
         border: 2px solid $orange;
@@ -25,15 +24,17 @@
         transition: all 0.2s ease-in;
         &:hover {
             background-color: $orange;
-           
+        }
+        @media (max-width: 400px) {
+            padding: 5px 10px;
         }
     }
     :global {
         .selected {
-            a {  
-            background-color: $orange;
-            color: #fff;}
+            a {
+                background-color: $orange;
+                color: #fff;
+            }
         }
     }
-
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { clearProducts, selectCart } from '../redux/slices/cartSlice';
@@ -6,6 +6,7 @@ import {CartItem} from '../components/CardItem';
 import {Cartempty} from '../components/Cartempty';
 import { setSearchValue } from '../redux/slices/filtersSlice';
 import { Modal } from '../components/Modal';
+import { Loader } from '../components';
 
 const Cart: React.FC = () => {
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Cart: React.FC = () => {
  
 
     if (!totalPrice) {
-        return <Cartempty />;
+        return <Suspense fallback={<Loader />}> <Cartempty /></Suspense>
     }
 
     return (

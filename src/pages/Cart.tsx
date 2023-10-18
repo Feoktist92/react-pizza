@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { clearProducts, selectCart } from '../redux/slices/cartSlice';
 import {CartItem} from '../components/CardItem';
 import {Cartempty} from '../components/Cartempty';
 import { setSearchValue } from '../redux/slices/filtersSlice';
+import { Modal } from '../components/Modal';
 
 const Cart: React.FC = () => {
     const dispatch = useDispatch();
     const { products, totalPrice } = useSelector(selectCart);
+    const [open, setOpen] = useState(false);
 
     const totalCount = products.reduce(
         (sum, product) => product.count + sum,
@@ -20,6 +22,15 @@ const Cart: React.FC = () => {
     const clearSearch = () => {
         dispatch(setSearchValue(''));
     };
+    const openModal = () => {
+        setOpen(true);
+        // document.body.style.height = '100vh';
+        // document.body.style.overflowY = 'hidden';
+        // document.body.style.paddingRight = '15px';
+    }
+
+
+
     if (!totalPrice) {
         return <Cartempty />;
     }
@@ -143,12 +154,13 @@ const Cart: React.FC = () => {
                             </svg>
                             <span>Вернуться назад</span>
                         </Link>
-                        <div className='button pay-btn'>
-                            <span>Оплатить сейчас</span>
+                        <div className='button pay-btn open-modal-btn' onClick={openModal}>
+                            <span>Оформить заказ</span>
                         </div>
                     </div>
                 </div>
             </div>
+            <Modal open={open} setOpen={setOpen} totalPrice={totalPrice}/>
         </div>
     );
 };

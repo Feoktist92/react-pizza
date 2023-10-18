@@ -386,14 +386,14 @@ body {
             @media (max-width: 767px) {
                 width: 20%;
             }
+            @media (max-width: 767px) {
+                width: 100%;
+            }
 
             b {
                 font-weight: bold;
                 font-size: 22px;
                 letter-spacing: 0.01em;
-                @media (max-width: 450px) {
-                    font-size: 18px;
-                }
             }
         }
 
@@ -441,6 +441,12 @@ body {
             display: flex;
             justify-content: space-between;
 
+            @media (max-width: 500px) {
+                flex-direction: column;
+                align-items: center;
+                row-gap: 15px;
+            }
+
             span {
                 font-size: 22px;
 
@@ -456,12 +462,20 @@ body {
             display: flex;
             justify-content: space-between;
             margin-top: 40px;
+            @media (max-width: 500px) {
+                flex-direction: column;
+                row-gap: 15px;
+                align-items: center;
+            }
 
             .go-back-btn {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 width: 210px;
+                @media (max-width: 500px) {
+                    order: 2;
+                }
 
                 border-color: darken($color: $gray-line, $amount: 10);
 

@@ -28,6 +28,7 @@ export const Sort:React.FC = React.memo(() => {
         setVisiblePopup(false);
     };
 
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
@@ -43,7 +44,7 @@ export const Sort:React.FC = React.memo(() => {
         <div className='sort' ref={sortRef}>
             <div className='sort__label'>
                 <svg
-                    onClick={() => dispatch(setSortMethod(!sortMethod))}
+                    onClick={() => () => dispatch(setSortMethod(!sortMethod))}
                     transform={!sortMethod ? 'rotate(-180 0 0)' : ''}
                     width='15'
                     height='10'

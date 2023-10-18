@@ -22,14 +22,7 @@ const Cart: React.FC = () => {
     const clearSearch = () => {
         dispatch(setSearchValue(''));
     };
-    const openModal = () => {
-        setOpen(true);
-        // document.body.style.height = '100vh';
-        // document.body.style.overflowY = 'hidden';
-        // document.body.style.paddingRight = '15px';
-    }
-
-
+ 
 
     if (!totalPrice) {
         return <Cartempty />;
@@ -154,13 +147,13 @@ const Cart: React.FC = () => {
                             </svg>
                             <span>Вернуться назад</span>
                         </Link>
-                        <div className='button pay-btn open-modal-btn' onClick={openModal}>
+                        <div className='button pay-btn open-modal-btn' onClick={() => setOpen(true)}>
                             <span>Оформить заказ</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <Modal open={open} setOpen={setOpen} totalPrice={totalPrice}/>
+            <Modal open={open} setOpen={setOpen}/>
         </div>
     );
 };

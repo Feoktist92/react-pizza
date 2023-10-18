@@ -1,19 +1,24 @@
 import React from "react";
 import styles from './Modal.module.scss';
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clearProducts, selectCart } from "../../redux/slices/cartSlice";
+
 
 
 type ModalProps = {
     open: boolean;
     setOpen: (value: boolean) => void;
-    totalPrice: number;
 }
 
-export const Modal:React.FC<ModalProps> = ({ open, setOpen, totalPrice }) => {
-    const navigate = useNavigate()
+export const Modal:React.FC<ModalProps> = ({ open, setOpen }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [valueName, setValueName] = React.useState('');
     const [valueTel, setValueTel] = React.useState('');
     const [valueEmail, setValueEmail] = React.useState('');
+    const {totalPrice} = useSelector(selectCart)
+
     const submitForm = () => {
         if(!valueName || !valueTel || !valueEmail) {
             alert('Пожалуйста, заполните все поля');
@@ -23,6 +28,7 @@ export const Modal:React.FC<ModalProps> = ({ open, setOpen, totalPrice }) => {
             setValueName('');
             setValueTel('');
             setValueEmail('');
+            dispatch(clearProducts());
             navigate('/cart');
         }
     };

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectFilters, setCategoryId } from '../redux/slices/filtersSlice';
 import React, { useCallback } from 'react';
 
-const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые'];
+const categories = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые'];
 
 export const Categories: React.FC =  React.memo(() => {
     const { categoryId } = useSelector(selectFilters);

@@ -1,0 +1,39 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  gap: 30px 10px;
+  padding: 15px 0;
+}
+@media (max-width: 540px) {
+  .root {
+    padding-bottom: 60px;
+  }
+}
+@media (max-width: 400px) {
+  .root {
+    flex-wrap: wrap;
+  }
+}
+.root li a {
+  padding: 10px 17px;
+  border-radius: 50%;
+  border: 2px solid rgb(170, 53, 53);
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+.root li a:hover {
+  background-color: rgb(170, 53, 53);
+}
+@media (max-width: 400px) {
+  .root li a {
+    padding: 5px 10px;
+  }
+}
+.root :global .selected a {
+  background-color: rgb(170, 53, 53);
+  color: #fff;
+}/*# sourceMappingURL=Pagination.module.css.map */

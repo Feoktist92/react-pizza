@@ -31,10 +31,11 @@
         overflow: hidden;
         padding: 10px 0;
         width: 160px;
+        z-index: 1;
 
         ul {
             overflow: hidden;
-            z-index: 1;
+
             li {
                 padding: 12px 20px;
                 cursor: pointer;

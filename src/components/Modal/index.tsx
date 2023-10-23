@@ -23,7 +23,7 @@ export const Modal:React.FC<ModalProps> = ({ open, setOpen }) => {
         if(!valueName || !valueTel || !valueEmail) {
             alert('Пожалуйста, заполните все поля');
         } else { 
-            alert('Спасибо за заказ! Скоро мы свяжемся с Вами!');
+            alert('Спасибо за заказ! Мы скоро свяжемся с Вами!');
             setOpen(false);
             setValueName('');
             setValueTel('');

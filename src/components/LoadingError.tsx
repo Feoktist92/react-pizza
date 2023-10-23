@@ -7,7 +7,7 @@ export const LoadingError:React.FC = () => {
             <h2>Ошибка при загрузке данных</h2>
             <p>
                 К сожалению, не удалось получить пиццы{' '}
-                <span className='sad-smile'>😕</span>. 
+                <span className='sad-smile'>😕</span> 
             </p>
         </div>
         

@@ -1,15 +1,19 @@
-
-
-import  React , {useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectFilters, setFilters } from '../redux/slices/filtersSlice';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
 import { useAppDispatch } from '../redux/store';
 import qs from 'qs';
 
-
-import {Categories,Sort,Pizzablock,Skeleton,Pagination,LoadingError} from '../components'
+import {
+    Categories,
+    Sort,
+    Pizzablock,
+    Skeleton,
+    Pagination,
+    LoadingError,
+} from '../components';
 import { list } from '../components';
 // import Categories from '../components/Categories';
 // import Sort, { list } from '../components/Sort';
@@ -17,7 +21,6 @@ import { list } from '../components';
 // import Skeleton from '../components/Skeleton';
 // import Pagination from '../components/Pagination';
 // import LoadingError from '../components/LoadingError';
-
 
 const Home: React.FC = () => {
     const { categoryId, sort, sortMethod, searchValue, currentPage } =
@@ -48,32 +51,31 @@ const Home: React.FC = () => {
                 categoryId,
                 currentPage,
                 sortMethod,
-                searchValue
+                searchValue,
             });
             navigate(`?${queryString}`);
         }
         isMounted.current = true;
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [categoryId, sort.sortProperty, currentPage, sortMethod]);
 
     // Если первый рендер уже был, то проверяем URl-параметры и сохраняем в редаксе
     useEffect(() => {
         if (window.location.search) {
-            const params:any = qs.parse(window.location.search.substring(1));
+            const params: any = qs.parse(window.location.search.substring(1));
             const sort = list.find(
                 (obj) => obj.sortProperty === params.sortProperty
             );
-            
+
             dispatch(setFilters({ ...params, sort }));
-        
         }
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
 
     // Если был первый рендер, запрашиваем пиццы, проверяя взяли  или  не взяли url-параметры
     useEffect(() => {
         getPizzas();
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [categoryId, sortMethod, currentPage, sort.sortProperty, searchValue]);
 
     return (
@@ -87,27 +89,24 @@ const Home: React.FC = () => {
                 <LoadingError />
             ) : (
                 <>
-                <div className='content__items'>
-                    {status === 'loading'
-                        ? [...new Array(4)].map((_, index) => (
-                              <Skeleton key={index} />
-                          ))
-                        : 
-                        items.map((obj: any) => (
-                              <Pizzablock
-                                  id={obj.id}
-                                  title={obj.title}
-                                  price={obj.price}
-                                  imageUrl={obj.imageUrl}
-                                  sizes={obj.sizes}
-                                  types={obj.types}
-                                  key={obj.id}
-                              />
-                          ))}
-                          </div>
-                          {items.length === 0 && (
-                            <LoadingError />
-                          )}
+                    <div className='content__items'>
+                        {status === 'loading'
+                            ? [...new Array(4)].map((_, index) => (
+                                  <Skeleton key={index} />
+                              ))
+                            : items.map((obj: any) => (
+                                  <Pizzablock
+                                      id={obj.id}
+                                      title={obj.title}
+                                      price={obj.price}
+                                      imageUrl={obj.imageUrl}
+                                      sizes={obj.sizes}
+                                      types={obj.types}
+                                      key={obj.id}
+                                  />
+                              ))}
+                    </div>
+                    {items.length === 0 && <LoadingError />}
                 </>
             )}
 
